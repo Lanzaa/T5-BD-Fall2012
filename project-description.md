@@ -3,12 +3,12 @@
 http://216.121.120.114/Project2
 
 
-= Project 2: Foursquare - Stats for a City =
-== Description ==
+# Project 2: Foursquare - Stats for a City #
+## Description ##
 The objective of this project is to provide a general idea of a city or metropolitan area based on popular venues (as per Foursquare checkins) for a specific period of time
 
 This project requires that you use reverse geocoding, either by writing your own program or using a web service (most of the free ones have limitations). Depending on the software tool you use, you might need to write a program to convert a Unix timestamp (Epoch Time) to a regular date and time.
-== Metrics ==
+## Metrics ##
 All metrics are for the specified period and chosen city.
 
  1. Most popular Arts & Entertainment venues
@@ -31,7 +31,7 @@ All metrics are for the specified period and chosen city.
   1. Present the peak usage hours by day of week for each of the following venues: Bus, Ferry, Light Rail, Subway, Taxi and Train
  1. Overall most popular venues
   1. Present the top 10 most popular venues for the selected city, broken down by gender and weekday/weekend
-== Data ==
+## Data ##
 We have access to Foursquare data that is in JSON format. An example of a check-in:
 {{{
 {"checkin":{
@@ -55,9 +55,9 @@ We have access to Foursquare data that is in JSON format. An example of a check-
 }}}
 
 Information on Foursquare categories can be found at http://aboutfoursquare.com/foursquare-categories/
-== Deployment ==
-=== Splunk ===
+## Deployment ##
+### Splunk ###
 Use one search head and two indexers.
-=== Hadoop ===
+### Hadoop ###
 Use one master and two slaves. You can use HBase or Hive
 
