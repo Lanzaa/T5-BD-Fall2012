@@ -1,5 +1,6 @@
 
 
+
 for reverse geocoding maybe use Yahoo PlaceFinder
 
 http://developer.yahoo.com/geo/placefinder/
@@ -7,4 +8,23 @@ http://developer.yahoo.com/geo/placefinder/
 Duncan Hall 135
 
 
+# time wc -l 4sq_data_tz_New_York.json
+15253825 4sq_data_tz_New_York.json
 
+real    12m57.047s
+user    0m0.025s
+sys     0m1.544s
+
+# time uniq -c venues.sorted.list | wc -l
+1885119
+
+real    1m33.469s
+user    1m32.131s
+sys     0m1.309s
+
+
+OpenStreetMap gives for City of New York
+minlon=-74.2590942382812
+maxlon=-73.7001647949219
+minlat=40.4773979187012
+maxlat=40.9175796508789
