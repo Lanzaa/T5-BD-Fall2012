@@ -1,10 +1,9 @@
-import ast
-import time
-#Existing Input file
-inputfile=open("4sq_sampledata.json","r+")
-tiput=inputfile.readlines()
-#Write the data with city in a new file
-newfile=open("4sq_new.json","w")
+#!/usr/bin/python3
+import sys
+import json
+
+infile = open(sys.argv[1],"r")
+outfile = open(sys.argv[2],"w")
 
 def in_NY(x,y):
     if (x >= -74.2590942382812 and x <= -73.7001647949219):
@@ -31,25 +30,22 @@ def point_in_poly(x,y,poly):
 #Set the coordinates of NewYork
 polygon = [(40.7697,-73.9735),(40.8500,-73.8667),(40.6500,-73.9500),(40.5822,-74.1409)]
 
-for i in range(len(tiput)):
-	print 'enter 1st check'+str(len(tiput))
-	iput=tiput[i]
-	iput=iput.strip()
-	invdata=ast.literal_eval(iput)
-	a=invdata['checkin']
-	point_y=a['geolat']
-	point_x=a['geolong']
-	checkcord=in_NY(point_x,point_y)
-	#checkcord=point_in_poly(point_x,point_y,polygon) #Calling the function
-	if checkcord:
-		a['city']='New York'
-		newval={}
-		newval['checkin']=a
-		covstr=str(newval)
-		newfile.write(covstr+'\n')
-	else:
-		a['city']='Others'
-	#print results[0].locality
+for line in infile:
+    try: 
+        dline = json.loads(line)
+        geolat = dline['checkin']['geolat']
+        geolong = dline['checkin']['geolong']
+        checkcord=in_NY(geolong,geolat)
+        if checkcord:
+            dline['checkin']['city'] = 'New York'
+        else:
+            dline['checkin']['city'] = 'Other'
+        oline = json.dumps(dline, ensure_ascii=False)
+        print(oline)
+        outfile.write(oline+"\n")
+        #print >> outfile, oline
+    except:
+        print >> sys.stderr, line,
 
-newfile.close()
-
+infile.close()
+outfile.close()
