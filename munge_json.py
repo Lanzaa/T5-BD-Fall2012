@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import sys
+import time
 import json
 
 infile = open(sys.argv[1],"r")
@@ -40,12 +41,19 @@ for line in infile:
             dline['checkin']['city'] = 'New York'
         else:
             dline['checkin']['city'] = 'Other'
+        timenow = dline['checkin']['created']
+        date_tuple = time.localtime(timenow)
+        myformat = "%m/%d/%Y %H:%M:%S"
+        dayformat = "%A"
+        mydate = time.strftime(myformat, date_tuple)
+        day = time.strftime(dayformat, date_tuple)
+        dline['checkin']['datetime']=mydate
+        dline['checkin']['day']=day
         oline = json.dumps(dline, ensure_ascii=False)
-        print(oline)
+        #print(oline)
         outfile.write(oline+"\n")
-        #print >> outfile, oline
     except:
-        print >> sys.stderr, line,
+        print(line+"\n", file=sys.stderr)
 
 infile.close()
 outfile.close()
