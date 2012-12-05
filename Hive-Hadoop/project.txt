@@ -1,0 +1,43 @@
+
+
+Our cluster has 6 nodes. One master, 5 slave.
+
+We initially had issues with our setup. Hive would work, but slowly and only
+utilizing one node for mapreducing. Determined it was a firewall issue. Openned the needed port on our master. Tried another hive query, query did not finish. All nodes being used for map and reduce, but stalled on reduce. Didn't want to troubleshoot more firewall issues, made firewall permissive:
+
+# Allow everything from any machine in our subnet. Also allows us to see how much traffic flows between the nodes.
+iptables -N HADOOP; iptables -I INPUT -s 173.1.5.0/24 -j HADOOP; iptables -A HADOOP -j ACCEPT
+
+More permissive than needed, but timely.
+
+== Data input
+The original data format was ~300 zip files containing large CSV files, ~200MB/csv. Data from October 1987 to September 2012.
+
+The original format had a large number of columns, but we kept only 56 of the 109.
+146076081-300 lines of data.
+
+
+Loaded this data into hdfs the loaded the data into hive:
+hive> CREATE TABLE FullData (...) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+hive> LOAD DATA INPATH '/data/*.csv' INTO TABLE FullData;
+
+Pros:
+We do not have to remove the extra rows. Hive just tosses the extra data with a small hidden warning.
+
+Cons:
+Speed. Querying took a long time. ~6 minutes. Too slow
+
+
+
+=== Small Data Set
+
+Due to the size of our original dataset we decided to create a smaller dataset from a sampling of the original.
+
+Created python script to randomly sample 1/20 lines from each csv
+
+Random sampling resulted in ~7.3 million lines about 3 GB of data. ~60MB/csv a good size
+
+hive query takes ~25 seconds. Much better
+
+
+

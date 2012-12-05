@@ -1,0 +1,8 @@
+
+
+== Command line magics
+
+for i in {1..4}{0..9}; do (cat x$i | xargs -n 10 ~/sampling.py ) > $((1988 + i/2))_$((i%2)).csv ; done
+
+
+

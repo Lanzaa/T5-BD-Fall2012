@@ -1,0 +1,9 @@
+
+Create shared metastore for hive, so each of us can work at the same time.
+
+Create sample dataset
+
+Reload full dataset. The table colintest has extra data somehow
+
+
+
