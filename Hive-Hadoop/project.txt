@@ -15,10 +15,15 @@ The original data format was ~300 zip files containing large CSV files, ~200MB/c
 
 The original format had a large number of columns, but we kept only 56 of the 109.
 146076081-300 lines of data.
+147122177 lines of data after fix
+
+had a problem with not having the full csv, due to? unzipping, on three files.
+
+delineated by ',' instead of ^A. used csvtool to fix. Took ~30 minutes to convert. (didn't want to send it to the cluster)
 
 
 Loaded this data into hdfs the loaded the data into hive:
-hive> CREATE TABLE FullData (...) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+hive> CREATE TABLE FullData (...) ROW FORMAT DELIMITED STORED AS TEXTFILE;
 hive> LOAD DATA INPATH '/data/*.csv' INTO TABLE FullData;
 
 Pros:
